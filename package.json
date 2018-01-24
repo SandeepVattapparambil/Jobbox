@@ -1,0 +1,22 @@
+{
+  "name": "jobbox",
+  "version": "1.0.0",
+  "description": "Job search application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/project-job-box/Jobbox.git"
+  },
+  "keywords": [
+    "Job"
+  ],
+  "author": "Sandeep Vattapparamabil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/project-job-box/Jobbox/issues"
+  },
+  "homepage": "https://github.com/project-job-box/Jobbox#readme"
+}
