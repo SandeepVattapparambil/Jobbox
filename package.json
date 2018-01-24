@@ -12,7 +12,8 @@
     "url": "git+https://github.com/project-job-box/Jobbox.git"
   },
   "keywords": [
-    "Job", "Job Search"
+    "Job",
+    "Job Search"
   ],
   "author": "Sandeep Vattapparamabil",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
-    "eslint": "^4.16.0"
+    "eslint": "^4.16.0",
+    "jslint": "^0.11.0"
   }
 }
