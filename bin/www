@@ -15,6 +15,7 @@ const http = require('http');
 let port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 logger.info('Application post set to:', port);
+
 /**
  * Create HTTP server.
  */
