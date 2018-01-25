@@ -3,9 +3,6 @@
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('pino')();
-global.logger = logger;
-
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
@@ -15,7 +12,6 @@ const users = require('./routes/users');
 
 //instantiate express app
 const app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -24,6 +20,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //setup middlewares
+app.use('./middlewares/logger');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
