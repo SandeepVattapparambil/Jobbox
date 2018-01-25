@@ -8,10 +8,12 @@ const app = require('../app');
 const debug = require('debug')('jobbox:server');
 const http = require('http');
 
+if (process.env.NODE_ENV){
+  console.log(process.env.NODE_ENV);
+}
 /**
  * Get port from environment and store in Express.
  */
-
 let port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 logger.info('Application post set to:', port);
