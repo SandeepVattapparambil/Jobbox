@@ -1,0 +1,25 @@
+{
+  "name": "jobbox",
+  "description": "Job search application",
+  "main": "bin\\www",
+  "authors": [
+    "Sandeep Vattapparamabil"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "Job",
+    "Job",
+    "Search"
+  ],
+  "homepage": "https://github.com/project-job-box/Jobbox",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.100.2"
+  }
+}
