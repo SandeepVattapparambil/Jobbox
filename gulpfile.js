@@ -10,6 +10,7 @@ const sass = require('gulp-sass');
 const uglifyjs = require('gulp-uglify');
 const concatjs = require('gulp-concat');
 const nodemon = require('gulp-nodemon');
+const inject = require('gulp-inject');
 //setup file paths
 const paths = {
     jQuerySource: 'bower_components/jQuery/dist/jquery.js',
@@ -20,18 +21,21 @@ const paths = {
 
     dist: 'public',
     distCSS: 'public/css/',
-    distJS: 'public/js/'
+    distJS: 'public/js/',
+
+    views: 'views',
+    partials: 'views/partials'
 };
 
 //setup tasks flow for various environments
 const tasks = {
-    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'nodemon', 'watch-files'],
-    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass','nodemon']
+    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'inject-js', 'nodemon', 'watch-files'],
+    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass', 'inject-js', 'nodemon']
 };
 
 //clean working directory
 gulp.task('cleanup-public-dir', () => {
-    return del([paths.distCSS+'*.*', paths.distJS+'*.*']);
+    return del([paths.distCSS + '*.*', paths.distJS + '*.*']);
 });
 //copy jQuery from bower_components to public directory
 gulp.task('copy-jQuery', () => {
@@ -50,7 +54,7 @@ gulp.task('copy-all-custom-js', () => {
 //copy and concatenate all js files into one single file and compress it
 gulp.task('copy-compress-concat-all-js', () => {
     return gulp.src([paths.jQuerySource, paths.materializeJsSource, paths.srcJS])
-        .pipe(concatjs('script.js'))
+        .pipe(concatjs('script.min.js'))
         .pipe(uglifyjs())
         .pipe(gulp.dest(paths.distJS));
 });
@@ -79,9 +83,22 @@ gulp.task('watch-files', () => {
     });
 });
 
-gulp.task('nodemon', function (cb) {
+let subTask = process.env.NODE_ENV === 'development' ? 'copy-all-custom-js' : 'copy-compress-concat-all-js';
+let time = (new Date()).getTime();
+gulp.task('inject-js', [subTask], () => {
+    return gulp.src('./views/partials/footer.ejs')
+        .pipe(inject(gulp.src('./public/js/*.*', {
+            read: false
+        }), {
+            relative: false,
+            ignorePath: '/public'
+        }))
+        .pipe(gulp.dest(paths.partials));
+});
+
+gulp.task('nodemon', (cb) => {
     return nodemon({
-      script: 'bin/www'
+        script: 'bin/www'
     }).once('start', cb);
 });
 
