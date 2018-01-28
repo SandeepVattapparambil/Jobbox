@@ -24,7 +24,7 @@ const paths = {
 };
 
 const tasks = {
-    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass', 'browser-sync','nodemon','watch-files'],
+    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass','nodemon', 'browser-sync','watch-files'],
     production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass','nodemon']
 };
 
