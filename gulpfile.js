@@ -2,6 +2,7 @@
 'use strict';
 //include gulp module
 const gulp = require('gulp');
+const del = require('del');
 //include gulp-sass
 const sass = require('gulp-sass');
 const uglifyjs = require('gulp-uglify');
@@ -19,34 +20,33 @@ const paths = {
     distJS: 'public/js/'
 };
 
-//copy jQuery from bower_components to working directory
+//clean working directory
+gulp.task('cleanup-public-dir', () => {
+    return del([paths.distCSS, paths.distJS]);
+});
+//copy jQuery from bower_components to public directory
 gulp.task('copyjQuery', () => {
     return gulp.src(paths.jQuerySource).pipe(gulp.dest(paths.distJS));
 });
-//copy jQuery from bower_components to working directory and compress it.
-gulp.task('copy-compress-jQuery', () => {
-    return gulp.src(paths.jQuerySource)
-    .pipe(uglifyjs())
-    .pipe(gulp.dest(paths.distJS));
+
+//copy materialize.js from bower_components to public directory
+gulp.task('copyMaterializeJs', () => {
+    return gulp.src(paths.materializeJsSource).pipe(gulp.dest(paths.distJS));
+});
+//copy custom javascript from working directory to public directory
+gulp.task('copyAllCcustomJs', () => {
+    return gulp.src(paths.srcJS).pipe(gulp.dest(paths.distJS));
 });
 
 //copy and concatenate all js files into one single file and compress it
-gulp.task('copy-compress-all', () => {
+gulp.task('copy-compress-concat-all-js', () => {
     return gulp.src([paths.jQuerySource, paths.materializeJsSource, paths.srcJS])
     .pipe(concatjs('script.js'))
     .pipe(uglifyjs())
     .pipe(gulp.dest(paths.distJS));
 });
 
-//copy materialize.js from bower_components to working directory
-gulp.task('copyMaterializeJs', () => {
-    return gulp.src(paths.materializeJsSource).pipe(gulp.dest(paths.distJS));
-});
-//copy custom javascript from working directory to dist
-gulp.task('copyAllCcustomJs', () => {
-    return gulp.src(paths.srcJS).pipe(gulp.dest(paths.distJS));
-});
-//compile materialize scss surce files from bower_components to css and pipe to working directory
+//compile materialize scss surce files from bower_components to css and pipe to public directory
 gulp.task('compile-sass-css', () => {
     return gulp.src(paths.materializeSASS)
         .pipe(sass({
@@ -54,7 +54,7 @@ gulp.task('compile-sass-css', () => {
         }).on('error', sass.logError))
         .pipe(gulp.dest(paths.distCSS));
 });
-//compile custom scss surce files from working directory to css and pipe to dist directory
+//compile custom scss surce files from working directory to css and pipe to public directory
 gulp.task('compile-source-sass', () => {
     return gulp.src(paths.srcSCSS)
         .pipe(sass({
