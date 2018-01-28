@@ -9,7 +9,6 @@ const del = require('del');
 const sass = require('gulp-sass');
 const uglifyjs = require('gulp-uglify');
 const concatjs = require('gulp-concat');
-const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
 //setup file paths
 const paths = {
@@ -26,7 +25,7 @@ const paths = {
 
 //setup tasks flow for various environments
 const tasks = {
-    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass', 'nodemon', 'watch-files'],
+    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'nodemon', 'watch-files'],
     production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass','nodemon']
 };
 
@@ -35,16 +34,16 @@ gulp.task('cleanup-public-dir', () => {
     return del([paths.distCSS+'*.*', paths.distJS+'*.*']);
 });
 //copy jQuery from bower_components to public directory
-gulp.task('copyjQuery', () => {
+gulp.task('copy-jQuery', () => {
     return gulp.src(paths.jQuerySource).pipe(gulp.dest(paths.distJS));
 });
 
 //copy materialize.js from bower_components to public directory
-gulp.task('copyMaterializeJs', () => {
+gulp.task('copy-materialize.js', () => {
     return gulp.src(paths.materializeJsSource).pipe(gulp.dest(paths.distJS));
 });
 //copy custom javascript from working directory to public directory
-gulp.task('copyAllCcustomJs', () => {
+gulp.task('copy-all-custom-js', () => {
     return gulp.src(paths.srcJS).pipe(gulp.dest(paths.distJS));
 });
 
@@ -80,26 +79,10 @@ gulp.task('watch-files', () => {
     });
 });
 
-gulp.task('browser-sync',() => {
-	browserSync.init(null, {
-		proxy: 'http://localhost:3000',
-        files: [paths.distCSS, paths.distCSS],
-        port: 7000,
-	});
-});
-
-gulp.task('nodemon', (cb) => {
-    let started = false;
+gulp.task('nodemon', function (cb) {
     return nodemon({
-        script: 'bin/www'
-    }).on('start', () => {
-        // to avoid nodemon being started multiple times
-        // thanks @matthisk
-        if (!started) {
-            cb();
-            started = true;
-        }
-    });
+      script: 'bin/www'
+    }).once('start', cb);
 });
 
 //setup and run tasks

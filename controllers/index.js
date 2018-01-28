@@ -1,6 +1,6 @@
 /* GET home page. */
 function renderIndex(req, res, next) {
-  res.render('index', {title: 'Sandeep Jobbox'});
+  res.render('index', {title: 'Jobbox'});
 }
 
 module.exports = {
