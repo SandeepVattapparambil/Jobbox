@@ -29,7 +29,7 @@ const server = http.createServer(app);
  */
 
 server.listen(port, function(){
-  console.log('Application running at: http://localhost:', port);
+  logger.info('Application running at: http://localhost:', port);
 });
 server.on('error', onError);
 server.on('listening', onListening);

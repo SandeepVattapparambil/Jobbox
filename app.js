@@ -5,9 +5,7 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const pino = require('pino');
-const pinoConfig = require('./config/pino');
-const logger = pino(pinoConfig);
+const logger = require('pino')(require('./config/pino'));
 global.logger = logger;
 // Initialize Global cache
 global.cache = {};
@@ -25,6 +23,9 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
+//disable x-powered-by to prevent hacks
+app.disable('x-powered-by');
+
 //setup middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -38,14 +39,14 @@ app.use('/', index);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
