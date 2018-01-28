@@ -4,6 +4,8 @@
 const gulp = require('gulp');
 //include gulp-sass
 const sass = require('gulp-sass');
+const uglifyjs = require('gulp-uglify');
+const concatjs = require('gulp-concat');
 //setup file paths
 const paths = {
     jQuerySource: 'bower_components/jQuery/dist/jquery.js',
@@ -21,6 +23,21 @@ const paths = {
 gulp.task('copyjQuery', () => {
     return gulp.src(paths.jQuerySource).pipe(gulp.dest(paths.distJS));
 });
+//copy jQuery from bower_components to working directory and compress it.
+gulp.task('copy-compress-jQuery', () => {
+    return gulp.src(paths.jQuerySource)
+    .pipe(uglifyjs())
+    .pipe(gulp.dest(paths.distJS));
+});
+
+//copy and concatenate all js files into one single file and compress it
+gulp.task('copy-compress-all', () => {
+    return gulp.src([paths.jQuerySource, paths.materializeJsSource, paths.srcJS])
+    .pipe(concatjs('script.js'))
+    .pipe(uglifyjs())
+    .pipe(gulp.dest(paths.distJS));
+});
+
 //copy materialize.js from bower_components to working directory
 gulp.task('copyMaterializeJs', () => {
     return gulp.src(paths.materializeJsSource).pipe(gulp.dest(paths.distJS));
