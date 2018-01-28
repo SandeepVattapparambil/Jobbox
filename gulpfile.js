@@ -1,5 +1,6 @@
 //Gulpfile
 'use strict';
+//override event emitter maxListeners
 require('events').EventEmitter.prototype._maxListeners = 100;
 //include gulp module
 const gulp = require('gulp');
@@ -23,14 +24,15 @@ const paths = {
     distJS: 'public/js/'
 };
 
+//setup tasks flow for various environments
 const tasks = {
-    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass','nodemon', 'browser-sync','watch-files'],
+    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass', 'nodemon', 'watch-files'],
     production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass','nodemon']
 };
 
 //clean working directory
 gulp.task('cleanup-public-dir', () => {
-    return del([paths.distCSS, paths.distJS]);
+    return del([paths.distCSS+'*.*', paths.distJS+'*.*']);
 });
 //copy jQuery from bower_components to public directory
 gulp.task('copyjQuery', () => {
