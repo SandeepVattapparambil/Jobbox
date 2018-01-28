@@ -85,13 +85,18 @@ gulp.task('watch-files', () => {
 
 let subTask = process.env.NODE_ENV === 'development' ? 'copy-all-custom-js' : 'copy-compress-concat-all-js';
 let time = (new Date()).getTime();
+const transform = (filepath) => {
+    arguments[0] = filepath + '?v=' + time;
+    return inject.transform.apply(inject.transform, arguments);
+};
 gulp.task('inject-js', [subTask], () => {
     return gulp.src('./views/partials/footer.ejs')
         .pipe(inject(gulp.src('./public/js/*.*', {
             read: false
         }), {
             relative: false,
-            ignorePath: '/public'
+            ignorePath: '/public',
+            transform: process.env.NODE_ENV === 'development' ? '': transform
         }))
         .pipe(gulp.dest(paths.partials));
 });
