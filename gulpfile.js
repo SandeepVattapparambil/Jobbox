@@ -1,5 +1,6 @@
 //Gulpfile
 'use strict';
+require('events').EventEmitter.prototype._maxListeners = 100;
 //include gulp module
 const gulp = require('gulp');
 const del = require('del');
@@ -7,6 +8,8 @@ const del = require('del');
 const sass = require('gulp-sass');
 const uglifyjs = require('gulp-uglify');
 const concatjs = require('gulp-concat');
+const browserSync = require('browser-sync');
+const nodemon = require('gulp-nodemon');
 //setup file paths
 const paths = {
     jQuerySource: 'bower_components/jQuery/dist/jquery.js',
@@ -21,8 +24,8 @@ const paths = {
 };
 
 const tasks = {
-    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass'],
-    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass']
+    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass', 'browser-sync','nodemon','watch-files'],
+    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass','nodemon']
 };
 
 //clean working directory
@@ -67,7 +70,37 @@ gulp.task('compile-source-sass', () => {
         }).on('error', sass.logError))
         .pipe(gulp.dest(paths.distCSS));
 });
+
+gulp.task('watch-files', () => {
+    console.log('Gulp is now watching....');
+    gulp.watch([paths.srcJS, paths.srcSCSS], ['default'], () => {
+        console.log('watcher updating resources....');
+    });
+});
+
+gulp.task('browser-sync',() => {
+	browserSync.init(null, {
+		proxy: 'http://localhost:3000',
+        files: [paths.distCSS, paths.distCSS],
+        port: 7000,
+	});
+});
+
+gulp.task('nodemon', (cb) => {
+    let started = false;
+    return nodemon({
+        script: 'bin/www'
+    }).on('start', () => {
+        // to avoid nodemon being started multiple times
+        // thanks @matthisk
+        if (!started) {
+            cb();
+            started = true;
+        }
+    });
+});
+
 //setup and run tasks
 gulp.task('default', tasks[process.env.NODE_ENV === 'production' ? 'production' : 'development'], () => {
-    console.log('Gulp tasks for '+process.env.NODE_ENV+' environment completed successfully!');
+    console.log('Gulp tasks for ' + process.env.NODE_ENV + ' environment completed successfully!');
 });
