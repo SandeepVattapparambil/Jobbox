@@ -20,6 +20,11 @@ const paths = {
     distJS: 'public/js/'
 };
 
+const tasks = {
+    development: ['cleanup-public-dir', 'copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass'],
+    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass']
+};
+
 //clean working directory
 gulp.task('cleanup-public-dir', () => {
     return del([paths.distCSS, paths.distJS]);
@@ -41,9 +46,9 @@ gulp.task('copyAllCcustomJs', () => {
 //copy and concatenate all js files into one single file and compress it
 gulp.task('copy-compress-concat-all-js', () => {
     return gulp.src([paths.jQuerySource, paths.materializeJsSource, paths.srcJS])
-    .pipe(concatjs('script.js'))
-    .pipe(uglifyjs())
-    .pipe(gulp.dest(paths.distJS));
+        .pipe(concatjs('script.js'))
+        .pipe(uglifyjs())
+        .pipe(gulp.dest(paths.distJS));
 });
 
 //compile materialize scss surce files from bower_components to css and pipe to public directory
@@ -63,6 +68,6 @@ gulp.task('compile-source-sass', () => {
         .pipe(gulp.dest(paths.distCSS));
 });
 //setup and run tasks
-gulp.task('default', ['copyjQuery', 'copyMaterializeJs', 'copyAllCcustomJs', 'compile-sass-css', 'compile-source-sass'], () => {
-    console.log('Gulp tasks completed successfully!');
+gulp.task('default', tasks[process.env.NODE_ENV === 'production' ? 'production' : 'development'], () => {
+    console.log('Gulp tasks for '+process.env.NODE_ENV+' environment completed successfully!');
 });
