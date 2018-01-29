@@ -29,8 +29,8 @@ const paths = {
 
 //setup tasks flow for various environments
 const tasks = {
-    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'inject-js', 'nodemon', 'watch-files'],
-    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass', 'inject-js', 'nodemon']
+    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'inject-css', 'inject-js', 'nodemon', 'watch-files'],
+    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass', 'inject-css', 'inject-js', 'nodemon']
 };
 
 //clean working directory
@@ -96,7 +96,18 @@ gulp.task('inject-js', [subTask], () => {
         }), {
             relative: false,
             ignorePath: '/public',
-            transform: process.env.NODE_ENV === 'development' ? '': transform
+            transform: process.env.NODE_ENV === 'development' ? '' : transform
+        }))
+        .pipe(gulp.dest(paths.partials));
+});
+gulp.task('inject-css', ['compile-sass-css', 'compile-source-sass'], () => {
+    return gulp.src('./views/partials/header.ejs')
+        .pipe(inject(gulp.src('./public/css/*.*', {
+            read: false
+        }), {
+            relative: false,
+            ignorePath: '/public',
+            transform: process.env.NODE_ENV === 'development' ? '' : transform
         }))
         .pipe(gulp.dest(paths.partials));
 });
@@ -110,4 +121,5 @@ gulp.task('nodemon', (cb) => {
 //setup and run tasks
 gulp.task('default', tasks[process.env.NODE_ENV === 'production' ? 'production' : 'development'], () => {
     console.log('Gulp tasks for ' + process.env.NODE_ENV + ' environment completed successfully!');
+    console.log('Application is now is now ready!');
 });
