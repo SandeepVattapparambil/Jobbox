@@ -78,7 +78,7 @@ gulp.task('compile-source-sass', () => {
 
 gulp.task('watch-files', () => {
     console.log('Gulp is now watching....');
-    gulp.watch([paths.srcJS, paths.srcSCSS], ['default'], () => {
+    gulp.watch([paths.srcJS, paths.srcSCSS], ['inject-js', 'inject-css'], () => {
         console.log('watcher updating resources....');
     });
 });
@@ -100,7 +100,7 @@ gulp.task('inject-js', [subTask], () => {
         }))
         .pipe(gulp.dest(paths.partials));
 });
-gulp.task('inject-css', ['compile-sass-css', 'compile-source-sass'], () => {
+gulp.task('inject-css', ['compile-sass-css'], () => {
     return gulp.src('./views/partials/header.ejs')
         .pipe(inject(gulp.src('./public/css/*.*', {
             read: false
