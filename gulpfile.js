@@ -1,6 +1,6 @@
 //Gulpfile
 'use strict';
-//override event emitter maxListeners
+//override number of event emitter maxListeners
 require('events').EventEmitter.prototype._maxListeners = 100;
 //include gulp module
 const gulp = require('gulp');
