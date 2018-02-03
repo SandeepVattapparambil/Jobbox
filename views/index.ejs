@@ -7,17 +7,35 @@
   </title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <% include ./partials/header %>
-  <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
-  <h1>
-    <%= title %>
-  </h1>
-  <p>Welcome to
-    <%= title %>
-  </p>
+    <nav class="white">
+        <div class="nav-wrapper">
+          <a href="#!" class="brand-logo grey-text">&nbsp;Logo</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse grey-text"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a class="grey-text" href="#">Sass</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a class="grey-text" href="#">Sass</a></li>
+          </ul>
+        </div>
+      </nav>
+
+  <div class="container">
+    <!-- Page Content goes here -->
+    <h1>
+      <%= title %>
+    </h1>
+    <p>Welcome to
+      <%= title %>
+    </p>
+
+  </div>
+
   <% include ./partials/footer %>
 </body>
 
