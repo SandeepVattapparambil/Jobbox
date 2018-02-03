@@ -78,7 +78,7 @@ gulp.task('compile-source-sass', () => {
 
 gulp.task('watch-files', () => {
     console.log('Gulp is now watching....');
-    gulp.watch([paths.srcJS, paths.srcSCSS], ['inject-js', 'inject-css'], () => {
+    gulp.watch([paths.srcJS, paths.srcSCSS], ['copy-all-custom-js', 'inject-js', 'compile-sass-css', 'inject-css', 'nodemon'], () => {
         console.log('watcher updating resources....');
     });
 });
@@ -112,7 +112,7 @@ gulp.task('inject-css', ['compile-sass-css'], () => {
         .pipe(gulp.dest(paths.partials));
 });
 
-gulp.task('nodemon', (cb) => {
+gulp.task('nodemon', ['inject-js', 'inject-css'], (cb) => {
     return nodemon({
         script: 'bin/www'
     }).once('start', cb);
