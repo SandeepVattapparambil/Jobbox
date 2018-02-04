@@ -12,6 +12,7 @@ $medium-purple: #9B6EF5;
 $caribbean-green: #16DBA7;
 $gradient-start: $blue-violet;
 $gradient-end: #A024FF;
+$grey: #9e9e9e;
 //horizontal gradient mixin
 @mixin horizontal-gradient($from, $to, $stop: 100%) {
     /* fallback/image non-cover color */
@@ -31,12 +32,19 @@ $gradient-end: #A024FF;
     /* IE6-9 */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$from', endColorstr='$to', GradientType=1);
 }
-
+a{
+    color: #7A40F1;
+}
 .purple {
     @include horizontal-gradient($gradient-start, $gradient-end);
 }
 
+.caribbean-green {
+    background: $caribbean-green;
+}
 nav {
+    height: 60px;
+    line-height: 60px;
     div.nav-wrapper {
         a.brand-logo {
             font-weight: 300;
@@ -44,8 +52,45 @@ nav {
     }
 }
 
+/* label color */
 
-nav {
-    height: 60px;
-    line-height: 60px;
+.input-field label {
+    color: $grey;
+}
+
+/* label focus color */
+input[type=text]:not(.browser-default):focus:not([readonly]) + label,
+.input-field input[type=text]:focus+label {
+    color:$blue-violet;
+}
+
+/* label underline focus color */
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid $blue-violet;
+    box-shadow: 0 1px 0 0 $blue-violet;
+}
+
+/* valid color */
+input[type=text]:not(.browser-default):focus:not([readonly]),
+.input-field input[type=text].valid {
+    border-bottom: 1px solid $blue-violet !important;
+    box-shadow: 0 1px 0 0 $blue-violet !important;
+}
+
+/* invalid color */
+
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+}
+
+/* icon prefix focus color */
+
+.input-field .prefix.active {
+    color:$blue-violet;
+}
+
+.btn.rounded{
+    border-radius: 50px;
 }
