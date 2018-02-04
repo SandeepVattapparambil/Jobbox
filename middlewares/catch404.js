@@ -13,11 +13,11 @@ router.use((err, req, res, next) => {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     // render the error page
     res.status(err.status || 500);
-    res.render('error',{
-      message : err.message,
-      status: err.status,
-      stack: err.stack
+    res.render('error', {
+        message: err.message,
+        status: err.status,
+        stack: err.stack
     });
-  });
+});
 
 module.exports = router;
