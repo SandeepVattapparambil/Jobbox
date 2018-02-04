@@ -6,6 +6,8 @@ const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('pino')(require('./config/pino'));
+const config = require('./config/application');
+global.appConfig = config;
 global.logger = logger;
 // Initialize Global cache
 global.cache = {};

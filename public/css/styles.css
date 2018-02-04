@@ -1,2 +1,28 @@
-.purple-border {
-  border-top: 5px solid #673ab7; }
+/*
+*Custom SASS for sass-css pipeline
+*written by Sandeep Vattapparambil
+*/
+.purple {
+  /* fallback/image non-cover color */
+  background-color: #7A40F1;
+  /* Firefox 3.6+ */
+  background-image: -moz-linear-gradient(left, #7A40F1 0%, #A024FF 100%);
+  /* Safari 4+, Chrome 1+ */
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, #7A40F1), color-stop(100%, #A024FF));
+  /* Safari 5.1+, Chrome 10+ */
+  background-image: -webkit-linear-gradient(left, #7A40F1 0%, #A024FF 100%);
+  /* Opera 11.10+ */
+  background-image: -o-linear-gradient(left, #7A40F1 0%, #A024FF 100%);
+  /* IE10+ */
+  background: -ms-linear-gradient(left, #7A40F1 0%, #A024FF 100%);
+  /* Standard */
+  background: linear-gradient(to right, #7A40F1 0%, #A024FF 100%);
+  /* IE6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$from', endColorstr='$to', GradientType=1); }
+
+.brand-logo {
+  font-weight: 300; }
+
+nav {
+  height: 60px;
+  line-height: 60px; }

@@ -1,4 +1,47 @@
-//Navbar border
-.purple-border{
-    border-top: 2px solid #673ab7;
+/*
+*Custom SASS for sass-css pipeline
+*written by Sandeep Vattapparambil
+*/
+
+//Color palette
+$ghost-white: #F8F8FA;
+$blue-violet: #7A40F1;
+$hawkes-blue: #D7DBE4;
+$quartz: #DCD8EB;
+$medium-purple: #9B6EF5;
+$caribbean-green: #16DBA7;
+$gradient-start: $blue-violet;
+$gradient-end: #A024FF;
+
+//horizontal gradient mixin
+@mixin horizontal-gradient($from, $to, $stop: 100%) {
+    /* fallback/image non-cover color */
+    background-color: $from;
+    /* Firefox 3.6+ */
+    background-image: -moz-linear-gradient(left, $from 0%, $to $stop);
+    /* Safari 4+, Chrome 1+ */
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, $from), color-stop($stop, $to));
+    /* Safari 5.1+, Chrome 10+ */
+    background-image: -webkit-linear-gradient(left, $from 0%, $to $stop);
+    /* Opera 11.10+ */
+    background-image: -o-linear-gradient(left, $from 0%, $to $stop);
+    /* IE10+ */
+    background: -ms-linear-gradient(left, $from 0%, $to $stop);
+    /* Standard */
+    background: linear-gradient(to right, $from 0%, $to $stop);
+    /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$from', endColorstr='$to', GradientType=1);
+}
+
+.purple {
+    @include horizontal-gradient($gradient-start, $gradient-end);
+}
+
+.brand-logo{
+    font-weight: 300;
+}
+
+nav{
+    height: 60px;
+    line-height: 60px;
 }

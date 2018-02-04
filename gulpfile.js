@@ -29,7 +29,7 @@ const paths = {
 
 //setup tasks flow for various environments
 const tasks = {
-    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'inject-css', 'inject-js', 'nodemon', 'watch-files'],
+    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'nodemon', 'watch-files'],
     production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass', 'inject-css', 'inject-js', 'nodemon']
 };
 
@@ -78,7 +78,10 @@ gulp.task('compile-source-sass', () => {
 
 gulp.task('watch-files', () => {
     console.log('Gulp is now watching....');
-    gulp.watch([paths.srcJS, paths.srcSCSS], ['copy-all-custom-js', 'inject-js', 'compile-sass-css', 'inject-css', 'nodemon'], () => {
+    gulp.watch([paths.srcJS], ['copy-all-custom-js', 'nodemon'], () => {
+        console.log('watcher updating resources....');
+    });
+    gulp.watch([paths.srcSCSS], ['compile-sass-css', 'nodemon'], () => {
         console.log('watcher updating resources....');
     });
 });
@@ -112,10 +115,19 @@ gulp.task('inject-css', ['compile-sass-css'], () => {
         .pipe(gulp.dest(paths.partials));
 });
 
-gulp.task('nodemon', ['inject-js', 'inject-css'], (cb) => {
+gulp.task('nodemon', ['compile-source-sass'], (cb) => {
+    let started = false;
     return nodemon({
-        script: 'bin/www'
-    }).once('start', cb);
+        script: 'bin/www',
+        watch: [paths.views, paths.partials]
+    }).on('start', () => {
+        // to avoid nodemon being started multiple times
+        // thanks @matthisk
+        if (!started) {
+            cb();
+            started = true;
+        }
+    });
 });
 
 //setup and run tasks
