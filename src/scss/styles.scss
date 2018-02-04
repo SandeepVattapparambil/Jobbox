@@ -12,7 +12,6 @@ $medium-purple: #9B6EF5;
 $caribbean-green: #16DBA7;
 $gradient-start: $blue-violet;
 $gradient-end: #A024FF;
-
 //horizontal gradient mixin
 @mixin horizontal-gradient($from, $to, $stop: 100%) {
     /* fallback/image non-cover color */
@@ -37,11 +36,16 @@ $gradient-end: #A024FF;
     @include horizontal-gradient($gradient-start, $gradient-end);
 }
 
-.brand-logo{
-    font-weight: 300;
+nav {
+    div.nav-wrapper {
+        a.brand-logo {
+            font-weight: 300;
+        }
+    }
 }
 
-nav{
+
+nav {
     height: 60px;
     line-height: 60px;
 }

@@ -38,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //setup routes
 app.use('/', index);
+app.use('/login', index);
 app.use('/users', users);
 
 //error middlewares

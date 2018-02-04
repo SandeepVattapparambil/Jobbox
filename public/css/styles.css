@@ -20,7 +20,7 @@
   /* IE6-9 */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$from', endColorstr='$to', GradientType=1); }
 
-.brand-logo {
+nav div.nav-wrapper a.brand-logo {
   font-weight: 300; }
 
 nav {
