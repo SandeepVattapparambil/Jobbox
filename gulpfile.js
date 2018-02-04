@@ -16,12 +16,15 @@ const paths = {
     jQuerySource: 'bower_components/jQuery/dist/jquery.js',
     materializeSASS: 'bower_components/materialize/sass/**/*.scss',
     materializeJsSource: 'bower_components/materialize/dist/js/materialize.js',
+    mdiSource:'bower_components/mdi/css/materialdesignicons.css',
+    mdiFonts: 'bower_components/mdi/fonts/*.*',
     srcJS: 'src/js/*.js',
     srcSCSS: 'src/scss/*.scss',
 
     dist: 'public',
     distCSS: 'public/css/',
     distJS: 'public/js/',
+    distFonts:'public/fonts/',
 
     views: 'views',
     partials: 'views/partials'
@@ -29,8 +32,8 @@ const paths = {
 
 //setup tasks flow for various environments
 const tasks = {
-    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js', 'compile-sass-css', 'compile-source-sass', 'nodemon', 'watch-files'],
-    production: ['cleanup-public-dir', 'copy-compress-concat-all-js', 'compile-sass-css', 'compile-source-sass', 'inject-css', 'inject-js', 'nodemon']
+    development: ['cleanup-public-dir', 'copy-jQuery', 'copy-materialize.js', 'copy-all-custom-js','copy-mdi','copy-mdi-fonts', 'compile-sass-css', 'compile-source-sass', 'nodemon', 'watch-files'],
+    production: ['cleanup-public-dir', 'copy-compress-concat-all-js','copy-mdi','copy-mdi-fonts', 'compile-sass-css', 'compile-source-sass', 'inject-css', 'inject-js', 'nodemon']
 };
 
 //clean working directory
@@ -66,6 +69,14 @@ gulp.task('compile-sass-css', () => {
             outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : ''
         }).on('error', sass.logError))
         .pipe(gulp.dest(paths.distCSS));
+});
+//copy mdi from bower to public css folder
+gulp.task('copy-mdi', () => {
+    return gulp.src(paths.mdiSource).pipe(gulp.dest(paths.distCSS));
+});
+//copy mdi fonts from bower to public fonts folder
+gulp.task('copy-mdi-fonts', () => {
+    return gulp.src(paths.mdiFonts).pipe(gulp.dest(paths.distFonts));
 });
 //compile custom scss surce files from working directory to css and pipe to public directory
 gulp.task('compile-source-sass', () => {

@@ -81,8 +81,8 @@ input[type=text]:not(.browser-default):focus:not([readonly]),
 /* invalid color */
 
 .input-field input[type=text].invalid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+    border-bottom: 1px solid red;
+    box-shadow: 0 1px 0 0 red;
 }
 
 /* icon prefix focus color */
@@ -93,4 +93,12 @@ input[type=text]:not(.browser-default):focus:not([readonly]),
 
 .btn.rounded{
     border-radius: 50px;
+    text-transform: capitalize;
+}
+.card>.card-content.no-bottom-padding{
+    padding-bottom: 0;
+}
+
+.card > .card-content.grey-text{
+    border-top: 1px solid rgb(233, 230, 230);
 }
