@@ -1,14 +1,18 @@
 'use strict';
 //Import npm modules
 const express = require('express');
+const mongoose = require('mongoose');
+const mongoConfig  =require('./config/database');
 const path = require('path');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('pino')(require('./config/pino'));
 const config = require('./config/application');
+global.mongoConfig = mongoConfig;
 global.appConfig = config;
 global.logger = logger;
+const connection = require('./db-connection/mongo');
 // Initialize Global cache
 global.cache = {};
 //set route controllers
