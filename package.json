@@ -24,22 +24,22 @@
   "dependencies": {
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "ejs": "~2.5.7",
-    "express": "~4.15.5",
+    "debug": "~3.1.0",
+    "ejs": "~2.6.1",
+    "express": "~4.16.3",
     "mongoose": "^5.0.3",
     "pino": "^4.10.3",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.5.0"
   },
   "devDependencies": {
     "bower": "^1.8.2",
     "del": "^3.0.0",
-    "eslint": "^4.16.0",
+    "eslint": "^5.0.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-inject": "^4.3.0",
     "gulp-nodemon": "^2.2.1",
-    "gulp-sass": "^3.1.0",
+    "gulp-sass": "^4.0.1",
     "gulp-uglify": "^3.0.0",
     "jshint": "^2.9.5",
     "nodemon": "^1.14.12"
